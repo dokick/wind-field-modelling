@@ -9,7 +9,8 @@ height_breakpoints = 1:28;
 
 
 quaternionBus = defineBus(4, "Bus for quaternions", ["q0", "q1", "q2", "q3"], "real", 1, "double", 0, 1, "1", ["1st quaternion", "2nd quaternion", "3rd quaternion", "4th quaternion"]);
-velocityBus = defineBus(3, "Bus for wind velocities", ["u", "v", "w"], "real", 1, "double", 0, 100, "m/s", ["u = north velocity", "v = east velocity", "w = down velocity"]);
+velocityBus = defineBus(3, "Bus for translatorial wind velocities", ["u", "v", "w"], "real", 1, "double", 0, 100, "m/s", ["u = north velocity", "v = east velocity", "w = down velocity"]);
+rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"], "real", 1, "double", 0, 100, "1/s", ["p = rotation around -axis", "q = rotation around -axis", "r = rotation around -axis"]);
 
 function bus = defineBus(numberOfElems, busDescription, busElemName, busElemComplexity, busElemDim, busElemType, busElemMin, busElemMax, busElemDocUnit, busElemDescription)
     bus = Simulink.Bus;
