@@ -2,6 +2,12 @@ clear;
 
 % read_wind_field;
 
+grid_step = 0.02;
+lat_breakpoints = 47:grid_step:54.98;
+lon_breakpoints = 5:grid_step:14.98;
+height_breakpoints = 1:28;
+
+
 quaternionBus = defineBus(4, "Bus for quaternions", ["q0", "q1", "q2", "q3"], "real", 1, "double", 0, 1, "1", ["1st quaternion", "2nd quaternion", "3rd quaternion", "4th quaternion"]);
 velocityBus = defineBus(3, "Bus for wind velocities", ["u", "v", "w"], "real", 1, "double", 0, 100, "m/s", ["u = north velocity", "v = east velocity", "w = down velocity"]);
 
