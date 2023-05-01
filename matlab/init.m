@@ -1,10 +1,10 @@
-clear;
+% clear;
 
 % read_wind_field;
 
 grid_step = 0.02;
-lat_breakpoints = 47:grid_step:54.98;
-lon_breakpoints = 5:grid_step:14.98;
+lat_breakpoints = (47:grid_step:54.98)*pi/180;
+lon_breakpoints = (5:grid_step:14.98)*pi/180;
 height_breakpoints = 1:28;
 
 
