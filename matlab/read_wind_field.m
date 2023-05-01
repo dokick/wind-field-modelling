@@ -28,7 +28,7 @@ for hour = 0:number_of_hours
 end
 
 function wind_field = get_freezed_wind_field(path_to_data, number_of_latitude_elements, number_of_longitude_elements, height_levels, date, hour, field)
-    wind_field = zeros(number_of_latitude_elements, number_of_longitude_elements, size(height_levels), "single");
+    wind_field = zeros(number_of_latitude_elements, number_of_longitude_elements, length(height_levels), "single");
 
     idx = 1;
     for height = height_levels
