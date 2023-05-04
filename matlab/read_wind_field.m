@@ -9,8 +9,8 @@
 % 14.98°E = Col 947
 
 % Input/Config
-path_to_data = "D:\\Dogukan\\VM Shared Files\\Ubuntu 18.04.6\\sf_icon-d2\\2023020912";
-timestamp = "2023020912";
+path_to_data = "D:\\Dogukan\\VM Shared Files\\Ubuntu 18.04.6\\sf_icon-d2\\2023050218";
+timestamp = "2023050218";
 number_of_hours = 2;
 height_levels = 38:65;
 
