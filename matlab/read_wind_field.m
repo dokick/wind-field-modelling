@@ -22,9 +22,9 @@ hours_u = {number_of_hours};
 hours_v = {number_of_hours};
 hours_w = {number_of_hours};
 for hour = 0:number_of_hours
-    hours_u{hour+1} = get_freezed_wind_field(path_to_data, number_of_latitude_elements, number_of_longitude_elements, height_levels, timestamp, hour, "u");
-    hours_v{hour+1} = get_freezed_wind_field(path_to_data, number_of_latitude_elements, number_of_longitude_elements, height_levels, timestamp, hour, "v");
-    hours_w{hour+1} = get_freezed_wind_field(path_to_data, number_of_latitude_elements, number_of_longitude_elements, height_levels, timestamp, hour, "w");
+    hours_u{hour+1} = get_freezed_wind_field(path_to_data, number_of_latitude_elements, number_of_longitude_elements, height_levels, timestamp, hour, "v");
+    hours_v{hour+1} = get_freezed_wind_field(path_to_data, number_of_latitude_elements, number_of_longitude_elements, height_levels, timestamp, hour, "u");
+    hours_w{hour+1} = -get_freezed_wind_field(path_to_data, number_of_latitude_elements, number_of_longitude_elements, height_levels, timestamp, hour, "w");
 end
 
 function wind_field = get_freezed_wind_field(path_to_data, number_of_latitude_elements, number_of_longitude_elements, height_levels, date, hour, field)
