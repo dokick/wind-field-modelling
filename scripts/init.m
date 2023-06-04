@@ -1,10 +1,13 @@
-% clear;
-
 % read_wind_field;
 
-grid_step = 0.02;
-lat_breakpoints = (47:grid_step:54.98)*pi/180;
-lon_breakpoints = (5:grid_step:14.98)*pi/180;
+% Gust config
+gust_start_time = 5;  % s
+gust_length = [120 120 80];  % [m] dx, dy, dz (NED)
+gust_amplitude = [3.5 3.5 3];  % [m/s] ug, vg, wg
+
+
+lat_breakpoints = (47:0.02:54.98)*pi/180;
+lon_breakpoints = (5:0.02:14.98)*pi/180;
 % height_breakpoints = [...
 %     10.000, ...
 %     37.606, ...
