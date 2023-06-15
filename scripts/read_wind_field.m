@@ -12,7 +12,7 @@
 path_to_data = "D:\\Dogukan\\VM Shared Files\\Ubuntu 18.04.6\\sf_icon-d2\\2023050218";
 timestamp = "2023050218";
 number_of_hours = 2;
-height_levels = 38:65;
+height_levels = 65:-1:38;
 
 % Constants
 number_of_latitude_elements = 400;
