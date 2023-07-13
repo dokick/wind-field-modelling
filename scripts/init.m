@@ -1,10 +1,20 @@
 % read_wind_field;
 
+simulation_time = 100;
+
+number_of_latitude_elements = 400;
+number_of_longitude_elements = 500;
+number_of_heights = 28;
+
+ts_wind_u = timeseries(0, 0:0.02:simulation_time);
+ts_wind_v = timeseries(0, 0:0.02:simulation_time);
+ts_wind_w = timeseries(0, 0:0.02:simulation_time);
+
 % Gust config
 gust_start_time = 5;  % s
 gust_length = [120 120 80];  % [m] dx, dy, dz (NED)
 gust_amplitude = [3.5 3.5 3];  % [m/s] ug, vg, wg
-
+ts_wind_u = ts_wind_u + createGust(gust_start_time, gust_length, gust_amplitude);
 
 lat_breakpoints = (47:0.02:54.98)*pi/180;
 lon_breakpoints = (5:0.02:14.98)*pi/180;
@@ -71,6 +81,35 @@ height_breakpoints = [...
 quaternionBus = defineBus(4, "Bus for quaternions", ["q0", "q1", "q2", "q3"], "real", 1, "double", 0, 1, "1", ["1st quaternion", "2nd quaternion", "3rd quaternion", "4th quaternion"]);
 velocityBus = defineBus(3, "Bus for translatorial wind velocities", ["u", "v", "w"], "real", 1, "double", 0, 100, "m/s", ["u = north velocity", "v = east velocity", "w = down velocity"]);
 rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"], "real", 1, "double", 0, 100, "1/s", ["p = rotation around -axis", "q = rotation around -axis", "r = rotation around -axis"]);
+
+
+function ts = createGust(lat, lon, height, gust_start_time, gust_length, gust_amplitude)
+    ts = timeseries(0, 0:0.02:100);
+    for idx=0:0.02:100
+        ts.Data(idx) = createEmptyGermanMap();
+    end
+end
+
+
+function ts = createPotentialVortex(lat, lon, height, radius, circulation)
+    ts = timeseries(0, 0:0.02:simulation_time);
+    u_theta = - circulation / (2 * pi * radius);
+    for idx=0:0.02:100
+        ts.Data(idx) = createEmptyGermanMap();
+    end
+end
+
+
+function matrix = createEmptyGermanMap()
+    number_of_latitude_elements = 400;
+    number_of_longitude_elements = 500;
+    number_of_heights = 28;
+    matrix = zeros( ...
+        number_of_latitude_elements, ...
+        number_of_longitude_elements, ...
+        number_of_heights);
+end
+
 
 function bus = defineBus(numberOfElems, busDescription, busElemName, busElemComplexity, busElemDim, busElemType, busElemMin, busElemMax, busElemDocUnit, busElemDescription)
     bus = Simulink.Bus;
