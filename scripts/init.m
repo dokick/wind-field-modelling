@@ -83,6 +83,14 @@ velocityBus = defineBus(3, "Bus for translatorial wind velocities", ["u", "v", "
 rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"], "real", 1, "double", 0, 100, "1/s", ["p = rotation around -axis", "q = rotation around -axis", "r = rotation around -axis"]);
 
 
+function ts = createModel(lat, lon, height)
+    ts = timeseries(0, 0:0.02:100);
+    for idx=0:0.02:100
+        ts.Data(idx) = createEmptyGermanMap();
+    end
+end
+
+
 function ts = createGust(lat, lon, height, gust_start_time, gust_length, gust_amplitude)
     ts = timeseries(0, 0:0.02:100);
     for idx=0:0.02:100
