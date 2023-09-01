@@ -1,6 +1,9 @@
 % read_wind_field;
 
-simulation_time = 100;
+simulation_time = 1000;
+
+matrix_idx = ceil((0:0.02:simulation_time) / 3600);
+matrix_idx(1) = 1;
 
 number_of_latitude_elements = 400;
 number_of_longitude_elements = 500;
@@ -14,7 +17,7 @@ ts_wind_w = timeseries(0, 0:0.02:simulation_time);
 gust_start_time = 5;  % s
 gust_length = [120 120 80];  % [m] dx, dy, dz (NED)
 gust_amplitude = [3.5 3.5 3];  % [m/s] ug, vg, wg
-ts_wind_u = ts_wind_u + createGust(gust_start_time, gust_length, gust_amplitude);
+% ts_wind_u = ts_wind_u + createGust(gust_start_time, gust_length, gust_amplitude);
 
 lat_breakpoints = (47:0.02:54.98)*pi/180;
 lon_breakpoints = (5:0.02:14.98)*pi/180;
@@ -91,12 +94,12 @@ function ts = createModel(lat, lon, height)
 end
 
 
-function ts = createGust(lat, lon, height, gust_start_time, gust_length, gust_amplitude)
-    ts = timeseries(0, 0:0.02:100);
-    for idx=0:0.02:100
-        ts.Data(idx) = createEmptyGermanMap();
-    end
-end
+% function ts = createGust(lat, lon, height, gust_start_time, gust_length, gust_amplitude)
+%     ts = timeseries(0, 0:0.02:100);
+%     for idx=0:0.02:100
+%         ts.Data(idx) = createEmptyGermanMap();
+%     end
+% end
 
 
 function ts = createPotentialVortex(lat, lon, height, radius, circulation)
