@@ -16,6 +16,10 @@
 *.flac
 
 ### Data ###
+data/**/*.bin
+data/**/*.bz2
+data/**/*.grib2
+data/**/*.json
 *.csv
 *.dat
 *.efx
