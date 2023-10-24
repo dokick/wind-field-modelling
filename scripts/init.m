@@ -1,6 +1,6 @@
 % read_wind_field;
 
-simulation_time = 1000;
+simulation_time = 1000;  % s
 
 matrix_idx = ceil((0:0.02:simulation_time) / 3600);
 matrix_idx(1) = 1;
@@ -12,6 +12,17 @@ number_of_heights = 28;
 ts_wind_u = timeseries(0, 0:0.02:simulation_time);
 ts_wind_v = timeseries(0, 0:0.02:simulation_time);
 ts_wind_w = timeseries(0, 0:0.02:simulation_time);
+
+% Translational wind config
+trans_lat_start = 0;
+trans_lat_end = 10;
+trans_lon_start = 0;
+trans_lon_end = 10;
+trans_height_start = 0;
+trans_height_end = 10;
+translationalWind = createTranslationalWind( ...
+    trans_lat_start, trans_lat_end, trans_lon_start, trans_lon_end, trans_height_start, trans_height_end, ...
+    [4, 7, 3]);
 
 % Gust config
 gust_start_time = 5;  % s
@@ -84,6 +95,24 @@ height_breakpoints = [...
 quaternionBus = defineBus(4, "Bus for quaternions", ["q0", "q1", "q2", "q3"], "real", 1, "double", 0, 1, "1", ["1st quaternion", "2nd quaternion", "3rd quaternion", "4th quaternion"]);
 velocityBus = defineBus(3, "Bus for translatorial wind velocities", ["u", "v", "w"], "real", 1, "double", 0, 100, "m/s", ["u = north velocity", "v = east velocity", "w = down velocity"]);
 rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"], "real", 1, "double", 0, 100, "1/s", ["p = rotation around -axis", "q = rotation around -axis", "r = rotation around -axis"]);
+
+
+function out = createTranslationalWind(lat_start, lat_end, lon_start, lon_end, height_start, height_end, velocity)
+    % velocity (u v w) in NED coordinate system and m/s
+    precision = 0.02;
+    number_of_lat_elements = round((lat_end - lat_start) / precision);
+    number_of_lon_elements = round((lon_end - lon_start) / precision);
+    number_of_height_elements = round((height_end - height_start) / precision);
+    out.u = padarray( ...
+        zeros([number_of_lat_elements, number_of_lon_elements, number_of_height_elements]) + velocity(1), ...
+        [1 1 1], 0, "both");
+    out.v = padarray( ...
+        zeros([number_of_lat_elements, number_of_lon_elements, number_of_height_elements]) + velocity(2), ...
+        [1 1 1], 0, "both");
+    out.w = padarray( ...
+        zeros([number_of_lat_elements, number_of_lon_elements, number_of_height_elements]) + velocity(3), ...
+        [1 1 1], 0, "both");
+end
 
 
 function ts = createModel(lat, lon, height)
