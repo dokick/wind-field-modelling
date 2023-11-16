@@ -99,36 +99,41 @@ rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"]
 
 function out = createTranslationalWind(lat_start, lat_end, lon_start, lon_end, height_start, height_end, velocity)
     % velocity (u v w) in NED coordinate system and m/s
-    precision = 0.02;
-    number_of_lat_elements = round((lat_end - lat_start) / precision);
-    number_of_lon_elements = round((lon_end - lon_start) / precision);
-    number_of_height_elements = round((height_end - height_start) / precision);
+    % precision = 0.02;
+    % number_of_lat_elements = round((lat_end - lat_start) / precision);
+    % number_of_lon_elements = round((lon_end - lon_start) / precision);
+    % number_of_height_elements = round((height_end - height_start) / precision);
     out.u = padarray( ...
-        zeros([number_of_lat_elements, number_of_lon_elements, number_of_height_elements]) + velocity(1), ...
+        zeros([2, 2, 2]) + velocity(1), ...
         [1 1 1], 0, "both");
     out.v = padarray( ...
-        zeros([number_of_lat_elements, number_of_lon_elements, number_of_height_elements]) + velocity(2), ...
+        zeros([2, 2, 2]) + velocity(2), ...
         [1 1 1], 0, "both");
     out.w = padarray( ...
-        zeros([number_of_lat_elements, number_of_lon_elements, number_of_height_elements]) + velocity(3), ...
+        zeros([2, 2, 2]) + velocity(3), ...
         [1 1 1], 0, "both");
 end
 
 
-function ts = createModel(lat, lon, height)
-    ts = timeseries(0, 0:0.02:100);
-    for idx=0:0.02:100
-        ts.Data(idx) = createEmptyGermanMap();
-    end
-end
-
-
-% function ts = createGust(lat, lon, height, gust_start_time, gust_length, gust_amplitude)
+% function ts = createModel(lat, lon, height)
 %     ts = timeseries(0, 0:0.02:100);
 %     for idx=0:0.02:100
 %         ts.Data(idx) = createEmptyGermanMap();
 %     end
 % end
+
+
+function out = createGauss(lat, lon, height, gust_start_time, gust_length, gust_amplitude)
+    out.u = padarray( ...
+        exp(-0.5 * ((-gust_length/2:gust_length/2 / gust_length) ^ 2)) / (gust_length*sqrt(2*pi)), ...
+        [1 1 1], 0, "both");
+    out.v = padarray( ...
+        exp(-0.5 * ((-gust_length/2:gust_length/2 / gust_length) ^ 2)) / (gust_length*sqrt(2*pi)), ...
+        [1 1 1], 0, "both");
+    out.w = padarray( ...
+        exp(-0.5 * ((-gust_length/2:gust_length/2 / gust_length) ^ 2)) / (gust_length*sqrt(2*pi)), ...
+        [1 1 1], 0, "both");
+end
 
 
 function ts = createPotentialVortex(lat, lon, height, radius, circulation)
