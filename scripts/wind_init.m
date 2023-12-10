@@ -14,12 +14,12 @@ ts_wind_v = timeseries(0, 0:0.02:simulation_time);
 ts_wind_w = timeseries(0, 0:0.02:simulation_time);
 
 % Translational wind config
-trans_lat_start = 0;
-trans_lat_end = 10;
-trans_lon_start = 0;
-trans_lon_end = 10;
-trans_height_start = 0;
-trans_height_end = 10;
+trans_lat_start = 0;  % rad
+trans_lat_end = 0.5;  % rad
+trans_lon_start = 0;  % rad
+trans_lon_end = 0.5;  % rad
+trans_height_start = 0;  % rad
+trans_height_end = 0.5;  % rad
 translationalWind = createTranslationalWind( ...
     trans_lat_start, trans_lat_end, trans_lon_start, trans_lon_end, trans_height_start, trans_height_end, ...
     [4, 7, 3]);
