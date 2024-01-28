@@ -13,6 +13,10 @@ ts_wind_u = timeseries(0, 0:0.02:simulation_time);
 ts_wind_v = timeseries(0, 0:0.02:simulation_time);
 ts_wind_w = timeseries(0, 0:0.02:simulation_time);
 
+% Wind models config
+
+rng(12345);
+
 % Translational wind config
 trans_lat_start = 0;  % rad
 trans_lat_end = 0.5;  % rad
@@ -22,12 +26,12 @@ trans_height_start = 0;  % rad
 trans_height_end = 0.5;  % rad
 translationalWind = createTranslationalWind( ...
     trans_lat_start, trans_lat_end, trans_lon_start, trans_lon_end, trans_height_start, trans_height_end, ...
-    [4, 7, 3]);
+    [10*rand, 10*rand, 10*rand]);
 
 % Gust config
-gust_start_time = 5;  % s
-gust_length = [120 120 80];  % [m] dx, dy, dz (NED)
-gust_amplitude = [3.5 3.5 3];  % [m/s] ug, vg, wg
+gust_start_time = 10*rand;  % s
+gust_length = [(120-80)*rand+80 (120-80)*rand+80 (120-80)*rand+80];  % [m] dx, dy, dz (NED)
+gust_amplitude = [4*rand 4*rand 4*rand];  % [m/s] ug, vg, wg
 % ts_wind_u = ts_wind_u + createGust(gust_start_time, gust_length, gust_amplitude);
 
 lat_breakpoints = (47:0.02:54.98)*pi/180;
