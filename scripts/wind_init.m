@@ -100,6 +100,37 @@ quaternionBus = defineBus(4, "Bus for quaternions", ["q0", "q1", "q2", "q3"], "r
 velocityBus = defineBus(3, "Bus for translatorial wind velocities", ["u", "v", "w"], "real", 1, "double", 0, 100, "m/s", ["u = north velocity", "v = east velocity", "w = down velocity"]);
 rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"], "real", 1, "double", 0, 100, "1/s", ["p = rotation around -axis", "q = rotation around -axis", "r = rotation around -axis"]);
 
+boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
+
+sinus_gust = createSinusoidalGust(0, boundaries, 5, 5, 5);
+
+function out = createBoundaries(lat_start, lat_end, lon_start, lon_end, height_start, height_end)
+    % All units are rad or meters
+    out.lat_start = lat_start;
+    out.lat_end = lat_end;
+    out.lon_start = lon_start;
+    out.lon_end = lon_end;
+    out.height_start = height_start;
+    out.height_end = height_end;
+end
+
+function out = createSinusoidalGust(time_start, boundaries, amplitude, width, speed)
+    % Units
+    % [time_start] = s
+    % [amplitude] = m/s
+    % [width] = m
+    % [speed] = m/s (tow speed)
+    out.boundaries.lat_start = boundaries.lat_start;
+    out.boundaries.lat_end = boundaries.lat_end;
+    out.boundaries.lon_start = boundaries.lon_start;
+    out.boundaries.lon_end = boundaries.lon_end;
+    out.boundaries.height_start = boundaries.height_start;
+    out.boundaries.height_end = boundaries.height_end;
+    out.amplitude = amplitude;
+    out.width = width;
+    out.speed = speed;
+    out.time_start = time_start;
+end
 
 function out = createTranslationalWind(lat_start, lat_end, lon_start, lon_end, height_start, height_end, velocity)
     % velocity (u v w) in NED coordinate system and m/s
