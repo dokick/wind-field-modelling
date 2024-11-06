@@ -137,11 +137,11 @@ function out = createSinusoidalGust(time_start, boundaries, amplitude, width, sp
     out.time_start = time_start;
 end
 
-function out = createTrapezoidalGust(boundaries, angle_start, angle_end, amplitude, width)
+function out = createTrapezoidalGust(boundaries, angle_entry, angle_exit, amplitude, width)
     % Units
     % [boundaries] = rad & m
-    % [angle_start] = deg
-    % [angle_end] = deg
+    % [angle_entry] = rad
+    % [angle_exit] = rad
     % [amplitude] = m/s
     % [width] = m
     out.boundaries.lat_start = boundaries.lat_start;
@@ -150,8 +150,8 @@ function out = createTrapezoidalGust(boundaries, angle_start, angle_end, amplitu
     out.boundaries.lon_end = boundaries.lon_end;
     out.boundaries.height_start = boundaries.height_start;
     out.boundaries.height_end = boundaries.height_end;
-    out.angle_start = angle_start;
-    out.angle_end = angle_end;
+    out.angle_entry = angle_entry;
+    out.angle_exit = angle_exit;
     out.amplitude = amplitude;
     out.width = width;
 end
