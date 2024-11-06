@@ -105,8 +105,8 @@ sinus_gust_boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
 sinus_gust = createSinusoidalGust(0, sinus_gust_boundaries, 5, 5, 5);
 
 % TODO: Make this into an array so multiple can exist
-trapezoidal_boundaires = createBoundaries();
-trapezoidal_gust = createTrapezoidalGust(trapezoidal_boundaries, 45, 45, 5, 5);
+trapezoidal_boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
+trapezoidal_gust = createTrapezoidalGust(trapezoidal_boundaries, pi/4, pi/4, 5, 5);
 
 function out = createBoundaries(lat_start, lat_end, lon_start, lon_end, height_start, height_end)
     % All units are rad or meters
