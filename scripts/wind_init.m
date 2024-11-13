@@ -66,7 +66,7 @@ lon_breakpoints = (5:0.02:14.98)*pi/180;
 %     2858.399, ...
 %     3044.029];
 
-height_breakpoints = [...
+HEIGHT_BREAKPOINTS = [...
     3044.029, ...
     2858.399, ...
     2678.926, ...
@@ -101,8 +101,8 @@ velocityBus = defineBus(3, "Bus for translatorial wind velocities", ["u", "v", "
 rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"], "real", 1, "double", 0, 100, "1/s", ["p = rotation around -axis", "q = rotation around -axis", "r = rotation around -axis"]);
 
 % TODO: Make this into an array so multiple can exist
-sinus_gust_boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
-sinus_gust = createSinusoidalGust(0, sinus_gust_boundaries, 5, 5, 5);
+sinusoidal_gust_boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
+sinusoidal_gust = createSinusoidalGust(0, sinusoidal_gust_boundaries, 5, 5, 5);
 
 % TODO: Make this into an array so multiple can exist
 trapezoidal_boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
