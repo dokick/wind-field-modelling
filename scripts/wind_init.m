@@ -100,6 +100,11 @@ quaternionBus = defineBus(4, "Bus for quaternions", ["q0", "q1", "q2", "q3"], "r
 velocityBus = defineBus(3, "Bus for translatorial wind velocities", ["u", "v", "w"], "real", 1, "double", 0, 100, "m/s", ["u = north velocity", "v = east velocity", "w = down velocity"]);
 rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"], "real", 1, "double", 0, 100, "1/s", ["p = rotation around -axis", "q = rotation around -axis", "r = rotation around -axis"]);
 
+% Gust configs:
+
+capacities.sinusoidal_gust_capacity = 5;
+capacities.trapezoidal_gust_capacity = 5;
+
 % TODO: Make this into an array so multiple can exist
 sinusoidal_gust_boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
 sinusoidal_gust = createSinusoidalGust(0, sinusoidal_gust_boundaries, 5, 5, 5);
@@ -173,14 +178,12 @@ function out = createTranslationalWind(lat_start, lat_end, lon_start, lon_end, h
         [1 1 1], 0, "both");
 end
 
-
 % function ts = createModel(lat, lon, height)
 %     ts = timeseries(0, 0:0.02:100);
 %     for idx=0:0.02:100
 %         ts.Data(idx) = createEmptyGermanMap();
 %     end
 % end
-
 
 function out = createGauss(lat, lon, height, gust_start_time, gust_length, gust_amplitude)
     out.u = padarray( ...
@@ -194,7 +197,6 @@ function out = createGauss(lat, lon, height, gust_start_time, gust_length, gust_
         [1 1 1], 0, "both");
 end
 
-
 function ts = createPotentialVortex(lat, lon, height, radius, circulation)
     ts = timeseries(0, 0:0.02:simulation_time);
     u_theta = - circulation / (2 * pi * radius);
@@ -202,7 +204,6 @@ function ts = createPotentialVortex(lat, lon, height, radius, circulation)
         ts.Data(idx) = createEmptyGermanMap();
     end
 end
-
 
 function matrix = createEmptyGermanMap()
     number_of_latitude_elements = 400;
@@ -213,7 +214,6 @@ function matrix = createEmptyGermanMap()
         number_of_longitude_elements, ...
         number_of_heights);
 end
-
 
 function bus = defineBus(numberOfElems, busDescription, busElemName, busElemComplexity, busElemDim, busElemType, busElemMin, busElemMax, busElemDocUnit, busElemDescription)
     bus = Simulink.Bus;
