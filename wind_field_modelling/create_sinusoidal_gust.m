@@ -1,4 +1,4 @@
-function out = createSinusoidalGust(time_start, boundaries, amplitude, width, speed)
+function out = create_sinusoidal_gust(time_start, boundaries, amplitude, width, speed)
     % CREATESINUSOIDALGUST Sets parameters for sinussoidal gusts
     % Units
     % [time_start] = s

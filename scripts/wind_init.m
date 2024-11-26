@@ -106,12 +106,12 @@ capacities.sinusoidal_gust_capacity = 5;
 capacities.trapezoidal_gust_capacity = 5;
 
 % TODO: Make this into an array so multiple can exist
-sinusoidal_gust_boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
-sinusoidal_gust = createSinusoidalGust(0, sinusoidal_gust_boundaries, 5, 5, 5);
+sinusoidal_gust_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
+sinusoidal_gust = create_sinusoidal_gust(0, sinusoidal_gust_boundaries, 5, 5, 5);
 
 % TODO: Make this into an array so multiple can exist
-trapezoidal_boundaries = createBoundaries(0, 2*pi, 0, 2*pi, 0, 3000);
-trapezoidal_gust = createTrapezoidalGust(trapezoidal_boundaries, pi/4, pi/4, 5, 5);
+trapezoidal_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
+trapezoidal_gust = create_trapezoidal_gust(trapezoidal_boundaries, pi/4, pi/4, 5, 5);
 trapezoidal_gust_bus = defineBus(10, ...
     "Bus for trapez gusts", ...
     ["LAT_START", "LAT_END", "LON_START", "LON_END", "HEIGHT_START", "HEIGHT_END", ...
@@ -119,7 +119,7 @@ trapezoidal_gust_bus = defineBus(10, ...
     "real", 1, "double", -1000, 1000, "", ...
     ["", "", "", "", "", "", "", "", "", ""]);
 
-function out = createBoundaries(lat_start, lat_end, lon_start, lon_end, height_start, height_end)
+function out = create_boundaries(lat_start, lat_end, lon_start, lon_end, height_start, height_end)
     % All units are rad or meters
     out.lat_start = lat_start;
     out.lat_end = lat_end;
@@ -129,7 +129,7 @@ function out = createBoundaries(lat_start, lat_end, lon_start, lon_end, height_s
     out.height_end = height_end;
 end
 
-function out = createSinusoidalGust(time_start, boundaries, amplitude, width, speed)
+function out = create_sinusoidal_gust(time_start, boundaries, amplitude, width, speed)
     % Units
     % [time_start] = s
     % [boundaries] = rad & m
@@ -148,7 +148,7 @@ function out = createSinusoidalGust(time_start, boundaries, amplitude, width, sp
     out.time_start = time_start;
 end
 
-function out = createTrapezoidalGust(boundaries, angle_entry, angle_exit, amplitude, width)
+function out = create_trapezoidal_gust(boundaries, angle_entry, angle_exit, amplitude, width)
     % Units
     % [boundaries] = rad & m
     % [angle_entry] = rad
