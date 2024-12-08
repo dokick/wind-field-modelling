@@ -2,7 +2,9 @@
 % That's why clear is called
 clear;
 
-time = linspace(0, 100); % s
+FREQUENCY = 125; % Hz
+
+time = linspace(0, 100*FREQUENCY); % s
 lat = zeros(length(time), 2);
 lat(:, 1) = time;
 lat(:, 2) = linspace( ...
@@ -19,10 +21,10 @@ altitude = zeros(length(time), 2);
 altitude(:, 1) = time;
 altitude(:, 2) = linspace(1000, 1000, length(time)); % TODO
 
-lat_0 = deg2rad(52.5); % rad
-lon_0 = deg2rad(12); % rad
-height_0 = 1000; % rad
-angle_entry = deg2rad(45); % rad
-angle_exit = deg2rad(40);
-amplitude = 10; % m/s
-width = 1000; % m
+lat_0 = [0, deg2rad(52.5)]; % rad
+lon_0 = [0, deg2rad(12)]; % rad
+height_0 = [0, 1000]; % rad
+angle_entry = [0, deg2rad(45)]; % rad
+angle_exit = [0, deg2rad(40)];
+amplitude = [0, 10]; % m/s
+width = [0, 1000]; % m
