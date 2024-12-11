@@ -1,5 +1,7 @@
 % read_wind_field;
 
+% load("MyConfiguration.mat");
+
 simulation_time = 1000;  % s
 
 matrix_idx = ceil((0:0.02:simulation_time) / 3600);
