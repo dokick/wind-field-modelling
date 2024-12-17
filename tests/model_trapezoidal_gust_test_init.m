@@ -27,8 +27,8 @@ altitude = zeros(length(time), 2);
 altitude(:, 1) = time;
 altitude(:, 2) = linspace(1000, 1000, length(time)); % m
 
-lat_0 = [0, deg2rad(52.5)]; % rad
-lon_0 = [0, deg2rad(13.2)]; % rad
+lat_0 = [0, 52.5]; % deg
+lon_0 = [0, 13.2]; % deg
 height_0 = [0, 1000]; % m
 
 angle_entry = [0, deg2rad(45)]; % rad

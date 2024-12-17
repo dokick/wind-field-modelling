@@ -26,6 +26,7 @@ data/**/*.json
 *.gbr
 *.key
 *.mat
+!MyConfiguration.mat
 *.pps
 *.ppt
 *.pptx
