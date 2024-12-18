@@ -31,7 +31,11 @@ lat_0 = [0, 52.5]; % deg
 lon_0 = [0, 13.2]; % deg
 height_0 = [0, 1000]; % m
 
-angle_entry = [0, deg2rad(45)]; % rad
-angle_exit = [0, deg2rad(40)]; % rad
+angle_north = [0, deg2rad(45)]; % rad
+angle_south = [0, deg2rad(40)]; % rad
+
+angle_east = [0, deg2rad(45)]; % rad
+angle_west = [0, deg2rad(45)]; % rad
+
 amplitude = [0, 10]; % m/s
 gust_width = [0, 10000]; % m
