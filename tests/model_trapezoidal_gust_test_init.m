@@ -12,14 +12,14 @@ time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1); % s
 lat = zeros(length(time), 2);
 lat(:, 1) = time;
 lat(:, 2) = linspace( ...
-    deg2rad(52.5), ...
-    deg2rad(52.5), ...
+    deg2rad(53), ...
+    deg2rad(52), ...
     length(time)); % rad
 
 lon = zeros(length(time), 2);
 lon(:, 1) = time;
 lon(:, 2) = linspace( ...
-    deg2rad(13.5), ...
+    deg2rad(14), ...
     deg2rad(13), ...
     length(time)); % rad
 
@@ -27,15 +27,19 @@ altitude = zeros(length(time), 2);
 altitude(:, 1) = time;
 altitude(:, 2) = linspace(1000, 1000, length(time)); % m
 
+% The following parameters have to be 1x2, because they are scalar
+% and constant throughout the simulation
+
 lat_0 = [0, 52.5]; % deg
-lon_0 = [0, 13.2]; % deg
+lon_0 = [0, 13.5]; % deg
 height_0 = [0, 1000]; % m
 
-angle_north = [0, deg2rad(45)]; % rad
-angle_south = [0, deg2rad(40)]; % rad
+% TODO: (m/s)/rad -> (m/s)/m
+gradient_north = [0, 2*222.55*180/pi]; % (m/s)/rad
+gradient_south = [0, 2*222.55*180/pi]; % (m/s)/rad
 
-angle_east = [0, deg2rad(45)]; % rad
-angle_west = [0, deg2rad(45)]; % rad
+gradient_east = [0, 2*222.55*180/pi]; % (m/s)/rad
+gradient_west = [0, 2*222.55*180/pi]; % (m/s)/rad
 
 amplitude = [0, 10]; % m/s
 gust_width = [0, 10000]; % m
