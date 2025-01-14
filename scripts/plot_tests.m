@@ -24,16 +24,16 @@ plot(w_lon.Values);
 
 figure(5);
 
-time_interval = [136, 164]; % s
-indexes = [17001, 20501];
-number_of_elements = indexes(2) - indexes(1) + 1;
+interval_start = find(nearby.Values.Data, 1, "first");
+interval_end = find(nearby.Values.Data, 1, "last");
+number_of_elements = interval_end - interval_start + 1;
 
-lat_relevant = lat(indexes(1):indexes(2), 2);
-lon_relevant = lon(indexes(1):indexes(2), 2);
+lat_relevant = lat(interval_start:interval_end, 2);
+lon_relevant = lon(interval_start:interval_end, 2);
 [lat_mesh, lon_mesh] = meshgrid(lat_relevant, lon_relevant);
 
-w_lat_relevant = w_lat.Values.Data(indexes(1):indexes(2));
-w_lon_relevant = w_lon.Values.Data(indexes(1):indexes(2));
+w_lat_relevant = w_lat.Values.Data(interval_start:interval_end);
+w_lon_relevant = w_lon.Values.Data(interval_start:interval_end);
 
 w_lat_relevant_mat = transpose(repmat(w_lat_relevant, 1, number_of_elements));
 w_lon_relevant_mat = repmat(w_lon_relevant, 1, number_of_elements);
