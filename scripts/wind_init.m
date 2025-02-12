@@ -19,6 +19,8 @@ ts_wind_w = timeseries(0, 0:0.02:simulation_time);
 
 rng(12345);
 
+EVENT_HORIZON = 1000;  % m
+
 % Translational wind config
 trans_lat_start = 0;  % rad
 trans_lat_end = 0.5;  % rad
@@ -113,13 +115,26 @@ sinusoidal_gust = create_sinusoidal_gust(0, sinusoidal_gust_boundaries, 5, 5, 5)
 
 % TODO: Make this into an array so multiple can exist
 trapezoidal_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
-trapezoidal_gust = create_trapezoidal_gust(trapezoidal_boundaries, pi/4, pi/4, 5, 5);
+% trapezoidal_gust = create_trapezoidal_gust(trapezoidal_boundaries, pi/4, pi/4, 5, 5);
 trapezoidal_gust_bus = defineBus(10, ...
     "Bus for trapez gusts", ...
     ["LAT_START", "LAT_END", "LON_START", "LON_END", "HEIGHT_START", "HEIGHT_END", ...
     "angle_entry", "angle_exit", "amplitude", "width"], ...
     "real", 1, "double", -1000, 1000, "", ...
     ["", "", "", "", "", "", "", "", "", ""]);
+trapezoidal_gusts = zeros([capacities.trapezoidal_gust_capacity, 9]);  % 9 is amount of parameters for trapez gusts
+
+for i = 1:capacities.trapezoidal_gust_capacity
+    trapezoidal_gusts(i, 1) = 55;  % lat_0
+    trapezoidal_gusts(i, 2) = 40;  % lon_0
+    trapezoidal_gusts(i, 3) = 1000;  % alt_0
+    trapezoidal_gusts(i, 4) = 1000;  % width
+    trapezoidal_gusts(i, 5) = 200;  % gradient_north
+    trapezoidal_gusts(i, 6) = 200;  % gradient_south
+    trapezoidal_gusts(i, 7) = 200;  % gradient_east
+    trapezoidal_gusts(i, 8) = 200;  % gradient_west
+    trapezoidal_gusts(i, 9) = 10;  % amplitude
+end
 
 function out = create_boundaries(lat_start, lat_end, lon_start, lon_end, height_start, height_end)
     % All units are rad or meters
