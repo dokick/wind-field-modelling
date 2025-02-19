@@ -111,7 +111,8 @@ capacities.trapezoidal_gust_capacity = 5;
 
 % TODO: Make this into an array so multiple can exist
 sinusoidal_gust_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
-sinusoidal_gust = create_sinusoidal_gust(0, sinusoidal_gust_boundaries, 5, 5, 5);
+% sinusoidal_gust = create_sinusoidal_gust(0, sinusoidal_gust_boundaries, 5, 5, 5);
+sinusoidal_gusts = zeros([capacities.sinusoidal_gust_capacity, 7]);
 
 % TODO: Make this into an array so multiple can exist
 trapezoidal_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
