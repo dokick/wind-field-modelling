@@ -113,6 +113,7 @@ capacities.trapezoidal_gust_capacity = 5;
 sinusoidal_gust_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
 % sinusoidal_gust = create_sinusoidal_gust(0, sinusoidal_gust_boundaries, 5, 5, 5);
 sinusoidal_gusts = zeros([capacities.sinusoidal_gust_capacity, 7]);
+SINUSOIDAL_GUST_EMPTY = zeros([capacities.sinusoidal_gust_capacity, 1]);
 
 % TODO: Make this into an array so multiple can exist
 trapezoidal_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
@@ -124,6 +125,7 @@ trapezoidal_gust_bus = defineBus(10, ...
     "real", 1, "double", -1000, 1000, "", ...
     ["", "", "", "", "", "", "", "", "", ""]);
 trapezoidal_gusts = zeros([capacities.trapezoidal_gust_capacity, 9]);  % 9 is amount of parameters for trapez gusts
+TRAPEZOIDAL_GUST_EMPTY = zeros([capacities.trapezoidal_gust_capacity, 1]);
 
 for i = 1:capacities.trapezoidal_gust_capacity
     trapezoidal_gusts(i, 1) = 55;  % lat_0

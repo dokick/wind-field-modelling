@@ -6,6 +6,7 @@ load("MyConfiguration.mat");
 
 FREQUENCY = 125; % Hz
 SIM_TIME = 300; % s
+EVENT_HORIZON = 1000;  % m
 
 time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1); % s
 

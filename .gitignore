@@ -27,6 +27,7 @@ data/**/*.json
 *.key
 *.mat
 !MyConfiguration.mat
+!MyConfiguration80.mat
 *.pps
 *.ppt
 *.pptx
