@@ -1,6 +1,8 @@
 lat = [0, 52.45];
 lon = [0, 13.45];
 
+EVENT_HORIZON = 20000;
+
 north_lla = ned2lla([EVENT_HORIZON/2, 0, 0], [lat(2), lon(2), height_0(2)], "flat");
 north = deg2rad(north_lla(1)); % rad
 south_lla = ned2lla([-EVENT_HORIZON/2, 0, 0], [lat(2), lon(2), height_0(2)], "flat");
@@ -15,16 +17,19 @@ lon_spectrum = linspace(east, west);
 
 [lat_mesh, lon_mesh] = meshgrid(lat_spectrum, lon_spectrum);
 
-time_end = numel(lat_mesh)/FREQUENCY;
+time_end = (numel(lat_mesh) - 1)/FREQUENCY;
 
 lat_mesh_flat = zeros([numel(lat_mesh), 2]);
 lon_mesh_flat = zeros([numel(lon_mesh), 2]);
 
-lat_mesh_flat(:, 1) = linspace(0, numel(lat_mesh)/FREQUENCY, numel(lat_mesh));
-lon_mesh_flat(:, 1) = linspace(0, numel(lon_mesh)/FREQUENCY, numel(lon_mesh));
+lat_mesh_flat(:, 1) = linspace(0, time_end, numel(lat_mesh));
+lon_mesh_flat(:, 1) = linspace(0, time_end, numel(lon_mesh));
 
 lat_mesh_flat(:, 2) = reshape(lat_mesh, [1, numel(lat_mesh)]);
 lon_mesh_flat(:, 2) = reshape(lon_mesh, [1, numel(lon_mesh)]);
+
+% lat_mesh_flat(end+1, 2) = lat_mesh_flat(end, 2);
+% lon_mesh_flat(end+1, 2) = lon_mesh_flat(end, 2);
 
 lat = lat_mesh_flat;
 lon = lon_mesh_flat;
