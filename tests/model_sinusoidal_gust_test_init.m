@@ -2,10 +2,12 @@
 % That's why clear is called
 clear;
 
-load("MyConfiguration.mat");
+load("MyConfiguration80.mat");
 
 FREQUENCY = 125; % Hz
 SIM_TIME = 300; % s
+
+CHORD_LENGTH = 5;  % m
 
 time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1); % s
 
@@ -13,7 +15,7 @@ lat = zeros(length(time), 2);
 lat(:, 1) = time;
 lat(:, 2) = linspace( ...
     deg2rad(52.5), ...
-    deg2rad(52.5), ...
+    deg2rad(52.45), ...
     length(time)); % rad
 
 lon = zeros(length(time), 2);
@@ -31,7 +33,7 @@ altitude(:, 2) = linspace(1000, 1000, length(time)); % m
 % and constant throughout the simulation
 
 lat_0 = [0, 52.5]; % deg
-lon_0 = [0, 13]; % deg
+lon_0 = [0, 13.5]; % deg
 height_0 = [0, 1000]; % m
 
 % The following paramters are specific to the phenomena

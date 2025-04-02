@@ -2,7 +2,7 @@
 % That's why clear is called
 clear;
 
-load("MyConfiguration.mat");
+load("MyConfiguration80.mat");
 
 FREQUENCY = 125; % Hz
 SIM_TIME = 300; % s
