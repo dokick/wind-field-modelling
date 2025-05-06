@@ -31,9 +31,6 @@ alt = zeros(length(time), 2);
 alt(:, 1) = time;
 alt(:, 2) = linspace(1000, 1000, length(time));  % m
 
-% The following parameters have to be 1x2, because they are scalar
-% and constant throughout the simulation
-
 EVENT_HORIZON = 1000;
 
 north_lla = ned2lla([EVENT_HORIZON/2, 0, 0], [lat_north, lon_east, 1000], "flat");
@@ -46,6 +43,9 @@ west_lla = ned2lla([0, -EVENT_HORIZON/2, 0], [lat_north, lon_east, 1000], "flat"
 west = west_lla(2);  % deg
 
 rng(0, "twister");
+
+% The following parameters have to be 1x2, because they are scalar
+% and constant throughout the simulation
 
 lat_0 = [0, (north-south)*rand + south];
 lon_0 = [0, (east-west)*rand + west];
