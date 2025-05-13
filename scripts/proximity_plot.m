@@ -1,7 +1,7 @@
-lat = [0, 52.5];
-lon = [0, 13.5];
+lat = [0, lat_north];
+lon = [0, lon_east];
 
-EVENT_HORIZON = 2000;
+EVENT_HORIZON = 1000;
 
 north_lla = ned2lla([EVENT_HORIZON/2, 0, 0], [lat(2), lon(2), alt_0(2)], "flat");
 north = deg2rad(north_lla(1)); % rad

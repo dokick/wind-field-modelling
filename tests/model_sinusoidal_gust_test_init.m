@@ -4,39 +4,56 @@ clear;
 
 load("MyConfiguration80.mat");
 
-FREQUENCY = 125; % Hz
-SIM_TIME = 300; % s
+FREQUENCY = 125;  % Hz
+SIM_TIME = 300;  % s
 
 CHORD_LENGTH = 5;  % m
 
-time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1); % s
+time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1);  % s
 
+lat_north = 52.5;  % deg
+lat_south = 52.45;  % deg
 lat = zeros(length(time), 2);
 lat(:, 1) = time;
 lat(:, 2) = linspace( ...
-    deg2rad(52.5), ...
-    deg2rad(52.45), ...
-    length(time)); % rad
+    deg2rad(lat_north), ...
+    deg2rad(lat_south), ...
+    length(time));  % rad
 
+lon_east = 13.5;
+lon_west = 12;
 lon = zeros(length(time), 2);
 lon(:, 1) = time;
 lon(:, 2) = linspace( ...
-    deg2rad(13.5), ...
-    deg2rad(12), ...
-    length(time)); % rad
+    deg2rad(lon_east), ...
+    deg2rad(lon_west), ...
+    length(time));  % rad
 
 altitude = zeros(length(time), 2);
 altitude(:, 1) = time;
-altitude(:, 2) = linspace(1000, 1000, length(time)); % m
+altitude(:, 2) = linspace(1000, 1000, length(time));  % m
+
+EVENT_HORIZON = 1000;
+
+north_lla = ned2lla([EVENT_HORIZON/2, 0, 0], [lat_north, lon_east, 1000], "flat");
+north = north_lla(1);  % deg
+south_lla = ned2lla([-EVENT_HORIZON/2, 0, 0], [lat_north, lon_east, 1000], "flat");
+south = south_lla(1);  % deg
+east_lla = ned2lla([0, EVENT_HORIZON/2, 0], [lat_north, lon_east, 1000], "flat");
+east = east_lla(2);  % deg
+west_lla = ned2lla([0, -EVENT_HORIZON/2, 0], [lat_north, lon_east, 1000], "flat");
+west = west_lla(2);  % deg
+
+rng(19, "twister");
 
 % The following parameters have to be 1x2, because they are scalar
 % and constant throughout the simulation
 
-lat_0 = [0, 52.5]; % deg
-lon_0 = [0, 13.5]; % deg
-height_0 = [0, 1000]; % m
+lat_0 = [0, (north-south)*rand + south];  % deg
+lon_0 = [0, (east-west)*rand + west];  % deg
+height_0 = [0, 1000];  % m
 
 % The following paramters are specific to the phenomena
 
-amplitude = [0, 10]; % m/s
-gust_width = [0, 1000]; % m
+amplitude = [0, 5];  % m/s
+gust_width = [0, 500];  % m

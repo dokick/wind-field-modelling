@@ -4,43 +4,57 @@ clear;
 
 load("MyConfiguration80.mat");
 
-FREQUENCY = 125; % Hz
-SIM_TIME = 300; % s
-EVENT_HORIZON = 1000;  % m
+FREQUENCY = 125;  % Hz
+SIM_TIME = 300;  % s
 
-time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1); % s
+time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1);  % s
 
+lat_north = 53;
+lat_south = 52;
 lat = zeros(length(time), 2);
 lat(:, 1) = time;
 lat(:, 2) = linspace( ...
-    deg2rad(53), ...
-    deg2rad(52), ...
-    length(time)); % rad
+    deg2rad(lat_north), ...
+    deg2rad(lat_south), ...
+    length(time));  % rad
 
+lon_east = 14;
+lon_west = 13;
 lon = zeros(length(time), 2);
 lon(:, 1) = time;
 lon(:, 2) = linspace( ...
-    deg2rad(14), ...
-    deg2rad(13), ...
-    length(time)); % rad
+    deg2rad(lon_east), ...
+    deg2rad(lon_west), ...
+    length(time));  % rad
 
 altitude = zeros(length(time), 2);
 altitude(:, 1) = time;
-altitude(:, 2) = linspace(1000, 1000, length(time)); % m
+altitude(:, 2) = linspace(1000, 1000, length(time));  % m
+
+EVENT_HORIZON = 1000;  % m
+
+north_lla = ned2lla([EVENT_HORIZON/2, 0, 0], [lat_north, lon_east, 1000], "flat");
+north = north_lla(1);  % deg
+south_lla = ned2lla([-EVENT_HORIZON/2, 0, 0], [lat_north, lon_east, 1000], "flat");
+south = south_lla(1);  % deg
+east_lla = ned2lla([0, EVENT_HORIZON/2, 0], [lat_north, lon_east, 1000], "flat");
+east = east_lla(2);  % deg
+west_lla = ned2lla([0, -EVENT_HORIZON/2, 0], [lat_north, lon_east, 1000], "flat");
+west = west_lla(2);  % deg
 
 % The following parameters have to be 1x2, because they are scalar
 % and constant throughout the simulation
 
-lat_0 = [0, 52.5]; % deg
-lon_0 = [0, 13.5]; % deg
-height_0 = [0, 1000]; % m
+lat_0 = [0, (north-south)*rand + south];  % deg
+lon_0 = [0, (east-west)*rand + west];  % deg
+alt_0 = [0, 1000];  % m
 
 % TODO: (m/s)/rad -> (m/s)/m
-gradient_north = [0, 2*222.55*180/pi]; % (m/s)/rad
-gradient_south = [0, 2*222.55*180/pi]; % (m/s)/rad
+gradient_north = [0, 222.55*180/pi];  % (m/s)/rad
+gradient_south = [0, 222.55*180/pi];  % (m/s)/rad
 
-gradient_east = [0, 2*222.55*180/pi]; % (m/s)/rad
-gradient_west = [0, 2*222.55*180/pi]; % (m/s)/rad
+gradient_east = [0, 222.55*180/pi];  % (m/s)/rad
+gradient_west = [0, 222.55*180/pi];  % (m/s)/rad
 
-amplitude = [0, 10]; % m/s
-gust_width = [0, 10000]; % m
+amplitude = [0, 10];  % m/s
+gust_width = [0, 500];  % m
