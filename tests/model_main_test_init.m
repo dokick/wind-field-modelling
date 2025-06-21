@@ -33,10 +33,13 @@ alt = zeros(length(time), 2);
 alt(:, 1) = time;
 alt(:, 2) = linspace(1000, 1000, length(time));  % m
 
-q0 = [0, 0];
-q1 = [0, 0];
-q2 = [0, 0];
-q3 = [0, 0];
+% The following parameters have to be 1x2, because they are scalar
+% and constant throughout the simulation
+
+q0 = [0, 0];  % 1
+q1 = [0, 0];  % 1
+q2 = [0, 0];  % 1
+q3 = [0, 0];  % 1
 
 u_in = [0, 0];  % m/s
 v_in = [0, 0];  % m/s
@@ -60,83 +63,41 @@ west = west_lla(2);  % deg
 SEED = 11;
 rng(SEED, "twister");
 
+% Capacity config
+
 sinusoidal_gust_capacity = 5;
 trapezoidal_gust_capacity = 5;
 knigge_gust_capacity = 5;
 cosine_gust_capacity = 5;
 
-% The following parameters have to be 1x2, because they are scalar
-% and constant throughout the simulation
-
 % Sinusoidal gust config
 
 number_sinusoidal_gust_parameters = 5;
 % 5 is amount of parameters for sinusoidal gusts
-sinusoidal_gusts = zeros([sinusoidal_gust_capacity, number_sinusoidal_gust_parameters]);
 SINUSOIDAL_GUST_EMPTY = zeros([sinusoidal_gust_capacity, 1]);
 SINUSOIDAL_GUST_MAX_WIDTH = 5;  % m
 SINUSOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
-
-for i = 1:sinusoidal_gust_capacity
-    sinusoidal_gusts(i, 1) = 55;  % [lat_0] = deg
-    sinusoidal_gusts(i, 2) = 40;  % [lon_0] = deg
-    sinusoidal_gusts(i, 3) = 1000;  % [alt_0] = m
-    sinusoidal_gusts(i, 4) = SINUSOIDAL_GUST_MAX_WIDTH*rand;  % [gust_width] = m
-    sinusoidal_gusts(i, 5) = SINUSOIDAL_GUST_MAX_AMPLITUDE*rand;  % [amplitude] = m/s
-end
 
 % Trapezoidal gust config
 
 number_trapezoidal_gust_parameters = 9;
 % 9 is amount of parameters for trapezoidal gusts
-trapezoidal_gusts = zeros([trapezoidal_gust_capacity, number_trapezoidal_gust_parameters]);
 TRAPEZOIDAL_GUST_EMPTY = zeros([trapezoidal_gust_capacity, 1]);
 TRAPEZOIDAL_GUST_MAX_WIDTH = 5;  % m
 TRAPEZOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
-
-for i = 1:trapezoidal_gust_capacity
-    trapezoidal_gusts(i, 1) = 55;  % [lat_0] = deg
-    trapezoidal_gusts(i, 2) = 40;  % [lon_0] = deg
-    trapezoidal_gusts(i, 3) = 1000;  % [alt_0] = m
-    trapezoidal_gusts(i, 4) = TRAPEZOIDAL_GUST_MAX_WIDTH*rand;  % [gust_width] = m
-    trapezoidal_gusts(i, 5) = 200;  % [gradient_north] = (m/s)/rad
-    trapezoidal_gusts(i, 6) = 200;  % [gradient_south] = (m/s)/rad
-    trapezoidal_gusts(i, 7) = 200;  % [gradient_east] = (m/s)/rad
-    trapezoidal_gusts(i, 8) = 200;  % [gradient_west] = (m/s)/rad
-    trapezoidal_gusts(i, 9) = TRAPEZOIDAL_GUST_MAX_AMPLITUDE*rand;  % [amplitude] = m/s
-end
 
 % Knigge gust config
 
 number_knigge_parameters = 6;
 % 6 is amount of parameters for knigge gusts
-knigge_gusts = zeros([knigge_gust_capacity, number_knigge_parameters]);
 KNIGGE_GUST_EMPTY = zeros([knigge_gust_capacity, 1]);
 KNIGGE_GUST_MAX_WIDTH = 5;  % m
 KNIGGE_GUST_MAX_AMPLITUDE = 5;  % m/s
-
-for i = 1:knigge_gust_capacity
-    knigge_gusts(i, 1) = 55;  % [lat_0] = deg
-    knigge_gusts(i, 2) = 40;  % [lon_0] = deg
-    knigge_gusts(i, 3) = 1000;  % [alt_0] = m
-    knigge_gusts(i, 4) = KNIGGE_GUST_MAX_WIDTH*rand;  % [gust_width] = m
-    knigge_gusts(i, 5) = KNIGGE_GUST_MAX_AMPLITUDE*rand;  % [amplitude] = m/s
-    knigge_gusts(i, 6) = randi(3);  % [gust_class] = -
-end
 
 % 1-cos gust config
 
 number_cosine_gust_parameters = 5;
 % 5 is amount of parameters for trapezoidal gusts
-cosine_gusts = zeros([cosine_gust_capacity, number_cosine_gust_parameters]);
 COSINE_GUST_EMPTY = zeros([cosine_gust_capacity, 1]);
 COSINE_GUST_MAX_WIDTH = 5;  % m
 COSINE_GUST_MAX_AMPLITUDE = 5;  % m/s
-
-for i = 1:cosine_gust_capacity
-    cosine_gusts(i, 1) = 55;  % [lat_0] = deg
-    cosine_gusts(i, 2) = 40;  % [lon_0] = deg
-    cosine_gusts(i, 3) = 1000;  % [alt_0] = m
-    cosine_gusts(i, 4) = COSINE_GUST_MAX_WIDTH*rand;  % [gust_width] = m
-    cosine_gusts(i, 5) = COSINE_GUST_MAX_AMPLITUDE*rand;  % [amplitude] = m/s
-end
