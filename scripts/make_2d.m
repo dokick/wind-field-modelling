@@ -3,13 +3,13 @@ lon = [0, lon_east];
 
 EVENT_HORIZON = 1000;
 
-north_lla = ned2lla([EVENT_HORIZON/2, 0, 0], [lat(2), lon(2), alt_0(2)], "flat");
+north_lla = ned2lla([EVENT_HORIZON, 0, 0], [lat(2), lon(2), alt_0(2)], "flat");
 north = deg2rad(north_lla(1)); % rad
-south_lla = ned2lla([-EVENT_HORIZON/2, 0, 0], [lat(2), lon(2), alt_0(2)], "flat");
+south_lla = ned2lla([-EVENT_HORIZON, 0, 0], [lat(2), lon(2), alt_0(2)], "flat");
 south = deg2rad(south_lla(1)); % rad
-east_lla = ned2lla([0, EVENT_HORIZON/2, 0], [lat(2), lon(2), alt_0(2)], "flat");
+east_lla = ned2lla([0, EVENT_HORIZON, 0], [lat(2), lon(2), alt_0(2)], "flat");
 east = deg2rad(east_lla(2)); % rad
-west_lla = ned2lla([0, -EVENT_HORIZON/2, 0], [lat(2), lon(2), alt_0(2)], "flat");
+west_lla = ned2lla([0, -EVENT_HORIZON, 0], [lat(2), lon(2), alt_0(2)], "flat");
 west = deg2rad(west_lla(2)); % rad
 
 lat_spectrum = linspace(north, south);
