@@ -54,10 +54,9 @@ alt_0 = [0, 1000];  % m
 amplitude = [0, 10];  % m/s
 gust_width = [0, 500];  % m
 
-% TODO: (m/s)/rad -> (m/s)/m
 gradient_north = [0, 2*amplitude(2)];  % m/s
 gradient_south = [0, 2*amplitude(2)];  % m/s
 
-gradient_east = [0, 2*amplitude(2)];  % m/s
-gradient_west = [0, 2*amplitude(2)];  % m/s
+gradient_east = [0, 3*amplitude(2)];  % m/s
+gradient_west = [0, 3*amplitude(2)];  % m/s
 

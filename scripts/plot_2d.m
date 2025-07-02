@@ -12,6 +12,16 @@ nearby = nearby(1:end-1);  % From 0s to 80s leads to 10001 elements, not compati
 nearby = reshape(nearby, size(lat_mesh));
 
 surf(lat_mesh, lon_mesh, w_g);
+cb = colorbar;
+cb.Label.String = "Windgeschwindigkeit [m/s]";
+xlabel("Breitengrad");
+
+figure;
+contourf(lat_mesh, lon_mesh, w_g);
+cb = colorbar;
+cb.Label.String = "Windgeschwindigkeit [m/s]";
+xlabel("Breitengrad");
+
 figure;
 surf(lat_mesh, lon_mesh, double(nearby));
 

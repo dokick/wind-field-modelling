@@ -29,9 +29,9 @@ lon(:, 2) = linspace( ...
     deg2rad(lon_west), ...
     length(time));  % rad
 
-altitude = zeros(length(time), 2);
-altitude(:, 1) = time;
-altitude(:, 2) = linspace(1000, 1000, length(time));  % m
+alt = zeros(length(time), 2);
+alt(:, 1) = time;
+alt(:, 2) = linspace(1000, 1000, length(time));  % m
 
 EVENT_HORIZON = 1000;
 
@@ -49,9 +49,11 @@ rng(19, "twister");
 % The following parameters have to be 1x2, because they are scalar
 % and constant throughout the simulation
 
-lat_0 = [0, (north-south)*rand + south];  % deg
-lon_0 = [0, (east-west)*rand + west];  % deg
-height_0 = [0, 1000];  % m
+% lat_0 = [0, (north-south)*rand + south];  % deg
+lat_0 = [0, deg2rad(lat_north)];  % rad
+% lon_0 = [0, (east-west)*rand + west];  % deg
+lon_0 = [0, deg2rad(lon_east)];  % rad
+alt_0 = [0, 1000];  % m
 
 % The following paramters are specific to the phenomena
 

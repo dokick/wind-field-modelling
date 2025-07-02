@@ -47,8 +47,10 @@ rng(11, "twister");
 % The following parameters have to be 1x2, because they are scalar
 % and constant throughout the simulation
 
-lat_0 = [0, (north-south)*rand + south]; % deg
-lon_0 = [0, (east-west)*rand + west]; % deg
+% lat_0 = [0, (north-south)*rand + south]; % deg
+lat_0 = [0, deg2rad(lat_north)];  % rad
+% lon_0 = [0, (east-west)*rand + west]; % deg
+lon_0 = [0, deg2rad(lon_east)];  % rad
 alt_0 = [0, 1000]; % m
 
 % The following paramters are specific to the phenomena
