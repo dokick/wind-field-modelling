@@ -88,8 +88,8 @@ TRAPEZOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
 
 % Knigge gust config
 
-number_knigge_parameters = 6;
-% 6 is amount of parameters for knigge gusts
+number_knigge_parameters = 8;
+% 8 is amount of parameters for knigge gusts
 KNIGGE_GUST_EMPTY = zeros([knigge_gust_capacity, 1]);
 KNIGGE_GUST_MAX_WIDTH = 5;  % m
 KNIGGE_GUST_MAX_AMPLITUDE = 5;  % m/s
