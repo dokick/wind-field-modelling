@@ -56,6 +56,9 @@ alt_0 = [0, 1000]; % m
 % The following paramters are specific to the phenomena
 
 gust_width = [0, 400];  % m
-amplitude = [0, 5];  % m/s
+[u_m, v_m, w_m] = calculate_amplitude(alt_0(2), gust_width(2));
+amplitude_u = [0, u_m];  % m/s
+amplitude_v = [0, v_m];  % m/s
+amplitude_w = [0, w_m];  % m/s
 % Gust class options: 1, 2, 3
 gust_class = [0, 1];  % -

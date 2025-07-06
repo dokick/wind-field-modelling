@@ -51,12 +51,15 @@ lat_0 = [0, deg2rad(53)];  % rad
 lon_0 = [0, deg2rad(14)];  % rad
 alt_0 = [0, 1000];  % m
 
-amplitude = [0, 10];  % m/s
 gust_width = [0, 500];  % m
+[~, ~, w_m] = calculate_amplitude(alt_0(2), gust_width(2));
+amplitude = [0, w_m];  % m/s
 
-gradient_north = [0, 2*amplitude(2)];  % m/s
-gradient_south = [0, 2*amplitude(2)];  % m/s
+rng(69419);
 
-gradient_east = [0, 3*amplitude(2)];  % m/s
-gradient_west = [0, 3*amplitude(2)];  % m/s
+gradient_north = [0, (0.5 + rand*(7-0.5))*amplitude(2)];  % m/s
+gradient_south = [0, (0.5 + rand*(7-0.5))*amplitude(2)];  % m/s
+
+gradient_east = [0, (0.5 + rand*(7-0.5))*amplitude(2)];  % m/s
+gradient_west = [0, (0.5 + rand*(7-0.5))*amplitude(2)];  % m/s
 
