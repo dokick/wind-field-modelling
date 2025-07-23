@@ -2,17 +2,26 @@
 % That's why clear is called
 clear;
 
-load("MyConfiguration4900.mat");
-
-distance = 147;  % km Berlin -> Magdeburg
-
+load("MyConfigurationDyn.mat");
+START_TIME = 0;  % s
+STOP_TIME = 80;  % s
 FREQUENCY = 125;  % Hz
-SIM_TIME = 4900;  % s
+SAMPLE_TIME = 0.008;  % s (1/FREQUENCY)
+SIM_TIME = STOP_TIME - START_TIME;  % s
+
+average_velocity = 30;  % m/s
+distance = average_velocity * SIM_TIME;  % m (240000) (Berlin -> Erfurt)
+% For a better resolution of data points occuring every 2m with an average diameter
+% of 2000m a grid of 1000x1000 elements was chosen. Therefore giving 1,000,000
+% elements. For 1,000,000 elements on one time stamp being possible to
+% travel a simulation time of 8000s is necessary. 8000s*125Hz=1,000,000
+% That yields 240000m which is approximately the distance from Berlin to
+% Erfurt and thus the LAT/LON borders are chosen.
 
 time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1);  % s
 
 lat_north = 52.5;  % deg
-lat_south = 52;  % deg
+lat_south = 51;  % deg
 lat = zeros(length(time), 2);
 lat(:, 1) = time;
 lat(:, 2) = linspace( ...
@@ -21,7 +30,7 @@ lat(:, 2) = linspace( ...
     length(time));  % rad
 
 lon_east = 13.5;
-lon_west = 11.5;
+lon_west = 11;
 lon = zeros(length(time), 2);
 lon(:, 1) = time;
 lon(:, 2) = linspace( ...
@@ -29,6 +38,7 @@ lon(:, 2) = linspace( ...
     deg2rad(lon_west), ...
     length(time));  % rad
 
+alt_0 = [0, 1000];
 alt = zeros(length(time), 2);
 alt(:, 1) = time;
 alt(:, 2) = linspace(1000, 1000, length(time));  % m

@@ -61,4 +61,4 @@ amplitude_u = [0, u_m];  % m/s
 amplitude_v = [0, v_m];  % m/s
 amplitude_w = [0, w_m];  % m/s
 % Gust class options: 1, 2, 3
-gust_class = [0, 1];  % -
+gust_class = [0, 2];  % -
