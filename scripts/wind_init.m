@@ -16,21 +16,10 @@ ts_wind_v = timeseries(0, 0:0.02:simulation_time);
 ts_wind_w = timeseries(0, 0:0.02:simulation_time);
 
 % Wind models config
-
-rng(12345);
+SEED = 12345;
+rng(SEED);
 
 EVENT_HORIZON = 1000;  % m
-
-% Translational wind config
-trans_lat_start = 0;  % rad
-trans_lat_end = 0.5;  % rad
-trans_lon_start = 0;  % rad
-trans_lon_end = 0.5;  % rad
-trans_height_start = 0;  % rad
-trans_height_end = 0.5;  % rad
-translationalWind = createTranslationalWind( ...
-    trans_lat_start, trans_lat_end, trans_lon_start, trans_lon_end, trans_height_start, trans_height_end, ...
-    [10*rand, 10*rand, 10*rand]);
 
 % Gust config
 gust_start_time = 10*rand;  % s
@@ -104,35 +93,16 @@ quaternionBus = defineBus(4, "Bus for quaternions", ["q0", "q1", "q2", "q3"], "r
 velocityBus = defineBus(3, "Bus for translatorial wind velocities", ["u", "v", "w"], "real", 1, "double", 0, 100, "m/s", ["u = north velocity", "v = east velocity", "w = down velocity"]);
 rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"], "real", 1, "double", 0, 100, "1/s", ["p = rotation around -axis", "q = rotation around -axis", "r = rotation around -axis"]);
 
-%%% Model parameter config %%%
+%% Model parameter config %%
 
 sinusoidal_gust_capacity = 5;
 trapezoidal_gust_capacity = 5;
-knigge_capacity = 5;
+knigge_gust_capacity = 5;
 cosine_gust_capacity = 5;
 
-% Sinusoidal gusts
+% TODO: Pick better min/max values for gust width for all models
 
-% TODO: Make this into an array so multiple can exist
-sinusoidal_gust_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
-% sinusoidal_gust = create_sinusoidal_gust(0, sinusoidal_gust_boundaries, 5, 5, 5);
-
-number_sinusoidal_gust_parameters = 5;
-% 5 is amount of parameters for sinusoidal gusts
-sinusoidal_gusts = zeros([sinusoidal_gust_capacity, number_sinusoidal_gust_parameters]);
-SINUSOIDAL_GUST_EMPTY = zeros([sinusoidal_gust_capacity, 1]);
-SINUSOIDAL_GUST_MAX_WIDTH = 5;  % m
-SINUSOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
-
-for i = 1:sinusoidal_gust_capacity
-    sinusoidal_gusts(i, 1) = 55;  % [lat_0] = deg
-    sinusoidal_gusts(i, 2) = 40;  % [lon_0] = deg
-    sinusoidal_gusts(i, 3) = 1000;  % [alt_0] = m
-    sinusoidal_gusts(i, 4) = SINUSOIDAL_GUST_MAX_WIDTH*rand;  % [gust_width] = m
-    sinusoidal_gusts(i, 5) = SINUSOIDAL_GUST_MAX_AMPLITUDE*rand;  % [amplitude] = m/s
-end
-
-% Trapezoidal gusts
+%% Trapezoidal gusts
 
 % TODO: Make this into an array so multiple can exist
 trapezoidal_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
@@ -148,7 +118,8 @@ number_trapezoidal_gust_parameters = 9;
 % 9 is amount of parameters for trapezoidal gusts
 trapezoidal_gusts = zeros([trapezoidal_gust_capacity, number_trapezoidal_gust_parameters]);
 TRAPEZOIDAL_GUST_EMPTY = zeros([trapezoidal_gust_capacity, 1]);
-TRAPEZOIDAL_GUST_MAX_WIDTH = 5;  % m
+TRAPEZOIDAL_GUST_MIN_WIDTH = 50;  % m
+TRAPEZOIDAL_GUST_MAX_WIDTH = 250;  % m
 TRAPEZOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
 
 for i = 1:trapezoidal_gust_capacity
@@ -163,16 +134,40 @@ for i = 1:trapezoidal_gust_capacity
     trapezoidal_gusts(i, 9) = TRAPEZOIDAL_GUST_MAX_AMPLITUDE*rand;  % [amplitude] = m/s
 end
 
-% Knigge gusts
+%% Sinusoidal gusts
+
+% TODO: Make this into an array so multiple can exist
+sinusoidal_gust_boundaries = create_boundaries(0, 2*pi, 0, 2*pi, 0, 3000);
+% sinusoidal_gust = create_sinusoidal_gust(0, sinusoidal_gust_boundaries, 5, 5, 5);
+
+number_sinusoidal_gust_parameters = 5;
+% 5 is amount of parameters for sinusoidal gusts
+sinusoidal_gusts = zeros([sinusoidal_gust_capacity, number_sinusoidal_gust_parameters]);
+SINUSOIDAL_GUST_EMPTY = zeros([sinusoidal_gust_capacity, 1]);
+SINUSOIDAL_GUST_MIN_WIDTH = 50;  % m
+SINUSOIDAL_GUST_MAX_WIDTH = 250;  % m
+SINUSOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
+
+for i = 1:sinusoidal_gust_capacity
+    sinusoidal_gusts(i, 1) = 55;  % [lat_0] = deg
+    sinusoidal_gusts(i, 2) = 40;  % [lon_0] = deg
+    sinusoidal_gusts(i, 3) = 1000;  % [alt_0] = m
+    sinusoidal_gusts(i, 4) = SINUSOIDAL_GUST_MAX_WIDTH*rand;  % [gust_width] = m
+    sinusoidal_gusts(i, 5) = SINUSOIDAL_GUST_MAX_AMPLITUDE*rand;  % [amplitude] = m/s
+end
+
+%% LES gusts
 
 number_knigge_parameters = 6;
 % 6 is amount of parameters for knigge gusts
-knigge_gusts = zeros([knigge_capacity, number_knigge_parameters]);
-KNIGGE_GUST_EMPTY = zeros([knigge_capacity, 1]);
+knigge_gusts = zeros([knigge_gust_capacity, number_knigge_parameters]);
+KNIGGE_GUST_EMPTY = zeros([knigge_gust_capacity, 1]);
+LES_GUST_MIN_WIDTH = 50;  % m
+LES_GUST_MAX_WIDTH = 250;  % m
 KNIGGE_GUST_MAX_WIDTH = 5;  % m
 KNIGGE_GUST_MAX_AMPLITUDE = 5;  % m/s
 
-for i = 1:knigge_capacity
+for i = 1:knigge_gust_capacity
     knigge_gusts(i, 1) = 55;  % [lat_0] = deg
     knigge_gusts(i, 2) = 40;  % [lon_0] = deg
     knigge_gusts(i, 3) = 1000;  % [alt_0] = m
@@ -181,13 +176,14 @@ for i = 1:knigge_capacity
     knigge_gusts(i, 6) = randi(3);  % [gust_class] = -
 end
 
-% 1-cos gust
+%% 1-cos gust
 
 number_cosine_gust_parameters = 5;
 % 5 is amount of parameters for trapezoidal gusts
 cosine_gusts = zeros([cosine_gust_capacity, number_cosine_gust_parameters]);
 COSINE_GUST_EMPTY = zeros([cosine_gust_capacity, 1]);
-COSINE_GUST_MAX_WIDTH = 5;  % m
+COSINE_GUST_MIN_WIDTH = 50;  % m
+COSINE_GUST_MAX_WIDTH = 250;  % m
 COSINE_GUST_MAX_AMPLITUDE = 5;  % m/s
 
 for i = 1:cosine_gust_capacity
@@ -198,7 +194,7 @@ for i = 1:cosine_gust_capacity
     cosine_gusts(i, 5) = COSINE_GUST_MAX_AMPLITUDE*rand;  % [amplitude] = m/s
 end
 
-%%% Functions %%%
+%% Functions %%
 
 function out = create_boundaries(lat_start, lat_end, lon_start, lon_end, height_start, height_end)
     % All units are rad or meters

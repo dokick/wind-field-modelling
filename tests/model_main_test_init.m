@@ -73,41 +73,47 @@ EVENT_HORIZON = 1000;
 SEED = 11;
 % rng(SEED, "twister");
 
-% Capacity config
+%% Capacity config
 
 sinusoidal_gust_capacity = 5;
 trapezoidal_gust_capacity = 5;
 knigge_gust_capacity = 5;
 cosine_gust_capacity = 5;
 
-% Sinusoidal gust config
+% TODO: Pick better min/max values for gust width for all models
 
-number_sinusoidal_gust_parameters = 5;
-% 5 is amount of parameters for sinusoidal gusts
-SINUSOIDAL_GUST_EMPTY = zeros([sinusoidal_gust_capacity, 1]);
-SINUSOIDAL_GUST_MAX_WIDTH = 5;  % m
-SINUSOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
-
-% Trapezoidal gust config
+%% Trapezoidal gust config
 
 number_trapezoidal_gust_parameters = 9;
 % 9 is amount of parameters for trapezoidal gusts
 TRAPEZOIDAL_GUST_EMPTY = zeros([trapezoidal_gust_capacity, 1]);
-TRAPEZOIDAL_GUST_MAX_WIDTH = 5;  % m
+TRAPEZOIDAL_GUST_MIN_WIDTH = 50;  % m
+TRAPEZOIDAL_GUST_MAX_WIDTH = 250;  % m
 TRAPEZOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
 
-% Knigge gust config
+%% Sinusoidal gust config
+
+number_sinusoidal_gust_parameters = 5;
+% 5 is amount of parameters for sinusoidal gusts
+SINUSOIDAL_GUST_EMPTY = zeros([sinusoidal_gust_capacity, 1]);
+SINUSOIDAL_GUST_MIN_WIDTH = 50;  % m
+SINUSOIDAL_GUST_MAX_WIDTH = 250;  % m
+SINUSOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
+
+%% LES gust config
 
 number_knigge_parameters = 8;
 % 8 is amount of parameters for knigge gusts
 KNIGGE_GUST_EMPTY = zeros([knigge_gust_capacity, 1]);
-KNIGGE_GUST_MAX_WIDTH = 5;  % m
+LES_GUST_MIN_WIDTH = 50;  % m
+LES_GUST_MAX_WIDTH = 250;  % m
 KNIGGE_GUST_MAX_AMPLITUDE = 5;  % m/s
 
-% 1-cos gust config
+%% 1-cos gust config
 
 number_cosine_gust_parameters = 5;
 % 5 is amount of parameters for trapezoidal gusts
 COSINE_GUST_EMPTY = zeros([cosine_gust_capacity, 1]);
-COSINE_GUST_MAX_WIDTH = 5;  % m
+COSINE_GUST_MIN_WIDTH = 50;  % m
+COSINE_GUST_MAX_WIDTH = 250;  % m
 COSINE_GUST_MAX_AMPLITUDE = 5;  % m/s
