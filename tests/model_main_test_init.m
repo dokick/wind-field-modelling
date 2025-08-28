@@ -2,6 +2,10 @@
 % That's why clear is called
 clear;
 
+addpath("./scripts/");
+addpath("./tests/");
+addpath("./wind_field_modelling/");
+
 load("MyConfigurationDyn.mat");
 START_TIME = 0;  % s
 STOP_TIME = 80;  % s
@@ -78,6 +82,7 @@ SEED = 11;
 sinusoidal_gust_capacity = 5;
 trapezoidal_gust_capacity = 5;
 knigge_gust_capacity = 5;
+les_gust_capacity = 5;
 cosine_gust_capacity = 5;
 
 % TODO: Pick better min/max values for gust width for all models
@@ -117,3 +122,7 @@ COSINE_GUST_EMPTY = zeros([cosine_gust_capacity, 1]);
 COSINE_GUST_MIN_WIDTH = 50;  % m
 COSINE_GUST_MAX_WIDTH = 250;  % m
 COSINE_GUST_MAX_AMPLITUDE = 5;  % m/s
+
+%% Run simulation
+
+% out = sim("model_main_test");
