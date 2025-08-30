@@ -2,9 +2,13 @@
 % That's why clear is called
 clear;
 
+%% Adding paths
+
 addpath("./scripts/");
 addpath("./tests/");
 addpath("./wind_field_modelling/");
+
+%% Main thing
 
 load("MyConfigurationDyn.mat");
 START_TIME = 0;  % s
