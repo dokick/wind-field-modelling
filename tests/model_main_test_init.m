@@ -12,7 +12,7 @@ addpath("./wind_field_modelling/");
 
 load("MyConfigurationDyn.mat");
 START_TIME = 0;  % s
-STOP_TIME = 80;  % s
+STOP_TIME = 150;  % s
 FREQUENCY = 125;  % Hz
 SAMPLE_TIME = 0.008;  % s (1/FREQUENCY)
 SIM_TIME = STOP_TIME - START_TIME;  % s
@@ -28,8 +28,8 @@ distance = average_velocity * SIM_TIME;  % m (240000) (Berlin -> Erfurt)
 
 time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1);  % s
 
-lat_north = 52.5;  % deg
-lat_south = 51;  % deg
+lat_north = 52.518736;  % deg
+lat_south = 52.494229;  % deg
 lat = zeros(length(time), 2);
 lat(:, 1) = time;
 lat(:, 2) = linspace( ...
@@ -37,8 +37,8 @@ lat(:, 2) = linspace( ...
     deg2rad(lat_south), ...
     length(time));  % rad
 
-lon_east = 13.5;
-lon_west = 11;
+lon_east = 13.402294;
+lon_west = 13.360977;
 lon = zeros(length(time), 2);
 lon(:, 1) = time;
 lon(:, 2) = linspace( ...
