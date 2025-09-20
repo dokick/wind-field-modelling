@@ -10,26 +10,39 @@ addpath("./wind_field_modelling/");
 
 %% Main thing
 
+is_long_flight = false;
+
+if is_long_flight
+    STOP_TIME = 3600;  %s
+    % lat_south = 52.155;  % deg (for south-west flight) (finish is approx. Möckern)
+    lat_south = 52.518736;  % deg (for pure west flight)
+    % lat_south = 52.882472;  % deg (for north-west flight)
+    lon_west = 11.9325;  % deg
+else
+    STOP_TIME = 150;  %s
+    % lat_south = 52.494229;  % deg
+    % lat_south = 52.518736;  % deg (for pure west flight)
+    lat_south = 52.543243;  % deg (for north-west flight)
+    lon_west = 13.360977;  % deg
+end
+
 load("MyConfigurationDyn.mat");
 START_TIME = 0;  % s
-STOP_TIME = 150;  % s
 FREQUENCY = 125;  % Hz
 SAMPLE_TIME = 0.008;  % s (1/FREQUENCY)
 SIM_TIME = STOP_TIME - START_TIME;  % s
 
 average_velocity = 30;  % m/s
-distance = average_velocity * SIM_TIME;  % m (240000) (Berlin -> Erfurt)
+distance = average_velocity * SIM_TIME;  % m
 % For a better resolution of data points occuring every 2m with an average diameter
 % of 2000m a grid of 1000x1000 elements was chosen. Therefore giving 1,000,000
 % elements. For 1,000,000 elements on one time stamp being possible to
 % travel a simulation time of 8000s is necessary. 8000s*125Hz=1,000,000
-% That yields 240000m which is approximately the distance from Berlin to
-% Erfurt and thus the LAT/LON borders are chosen.
 
 time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1);  % s
 
 lat_north = 52.518736;  % deg
-lat_south = 52.494229;  % deg
+% lat_south = 52.518736;  % deg
 lat = zeros(length(time), 2);
 lat(:, 1) = time;
 lat(:, 2) = linspace( ...
@@ -37,8 +50,7 @@ lat(:, 2) = linspace( ...
     deg2rad(lat_south), ...
     length(time));  % rad
 
-lon_east = 13.402294;
-lon_west = 13.360977;
+lon_east = 13.402294;  % deg
 lon = zeros(length(time), 2);
 lon(:, 1) = time;
 lon(:, 2) = linspace( ...
@@ -67,7 +79,7 @@ p_g = [0, 0];  % 1/s
 q_g = [0, 0];  % 1/s
 r_g = [0, 0];  % 1/s
 
-EVENT_HORIZON = 1000;
+EVENT_HORIZON = 1000;  % m
 
 % north_lla = ned2lla([EVENT_HORIZON/2, 0, 0], [lat_north, lon_east, 1000], "flat");
 % north = north_lla(1);  % deg
@@ -113,7 +125,7 @@ SINUSOIDAL_GUST_MAX_AMPLITUDE = 5;  % m/s
 
 number_knigge_parameters = 8;
 % 8 is amount of parameters for knigge gusts
-KNIGGE_GUST_EMPTY = zeros([knigge_gust_capacity, 1]);
+LES_GUST_EMPTY = zeros([knigge_gust_capacity, 1]);
 LES_GUST_MIN_WIDTH = 50;  % m
 LES_GUST_MAX_WIDTH = 250;  % m
 KNIGGE_GUST_MAX_AMPLITUDE = 5;  % m/s
