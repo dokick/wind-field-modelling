@@ -97,7 +97,7 @@ rotationBus = defineBus(3, "Bus for rotational wind velocities", ["p", "q", "r"]
 
 sinusoidal_gust_capacity = 5;
 trapezoidal_gust_capacity = 5;
-knigge_gust_capacity = 5;
+les_gust_capacity = 5;
 cosine_gust_capacity = 5;
 
 % TODO: Pick better min/max values for gust width for all models
@@ -160,14 +160,14 @@ end
 
 number_knigge_parameters = 6;
 % 6 is amount of parameters for knigge gusts
-knigge_gusts = zeros([knigge_gust_capacity, number_knigge_parameters]);
-KNIGGE_GUST_EMPTY = zeros([knigge_gust_capacity, 1]);
+knigge_gusts = zeros([les_gust_capacity, number_knigge_parameters]);
+LES_GUST_EMPTY = zeros([les_gust_capacity, 1]);
 LES_GUST_MIN_WIDTH = 50;  % m
 LES_GUST_MAX_WIDTH = 250;  % m
 KNIGGE_GUST_MAX_WIDTH = 5;  % m
 KNIGGE_GUST_MAX_AMPLITUDE = 5;  % m/s
 
-for i = 1:knigge_gust_capacity
+for i = 1:les_gust_capacity
     knigge_gusts(i, 1) = 55;  % [lat_0] = deg
     knigge_gusts(i, 2) = 40;  % [lon_0] = deg
     knigge_gusts(i, 3) = 1000;  % [alt_0] = m
