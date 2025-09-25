@@ -2,10 +2,14 @@
 % That's why clear is called
 clear;
 
-load("MyConfiguration80.mat");
+load("MyConfigurationDyn.mat");
 
 FREQUENCY = 125;  % Hz
-SIM_TIME = 300;  % s
+START_TIME = 0;
+STOP_TIME = 8000;  % s
+SAMPLE_TIME = 1/FREQUENCY;  % s
+
+SIM_TIME = STOP_TIME - START_TIME;  % s
 
 time = linspace(0, SIM_TIME, SIM_TIME*FREQUENCY + 1);  % s
 

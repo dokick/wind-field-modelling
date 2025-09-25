@@ -2,10 +2,14 @@
 % That's why clear is called
 clear;
 
-load("MyConfiguration80.mat");
+load("MyConfigurationDyn.mat");
 
 FREQUENCY = 125;  % Hz
-SIM_TIME = 300;  % s
+START_TIME = 0;
+STOP_TIME = 8000;  % s
+SAMPLE_TIME = 1/FREQUENCY;  % s
+
+SIM_TIME = STOP_TIME - START_TIME;  % s
 
 CHORD_LENGTH = 5;  % m
 
@@ -56,6 +60,6 @@ lon_0 = [0, deg2rad(lon_east)];  % rad
 alt_0 = [0, 1000];  % m
 
 % The following paramters are specific to the phenomena
-
-amplitude = [0, 5];  % m/s
-gust_width = [0, 500];  % m
+gust_width = [0, 200];  % m
+[~, ~, w_m] = calculate_amplitude(alt_0(2), gust_width(2));
+amplitude = [0, w_m];  % m/s
