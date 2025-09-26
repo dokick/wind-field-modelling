@@ -39,13 +39,13 @@ alt(:, 2) = linspace(1000, 1000, length(time));  % m
 
 EVENT_HORIZON = 1000;
 
-north_lla = ned2lla([EVENT_HORIZON/2, 0, 0], [lat_north, lon_east, 1000], "flat");
+north_lla = ned2lla([EVENT_HORIZON, 0, 0], [lat_north, lon_east, 1000], "flat");
 north = north_lla(1);  % deg
-south_lla = ned2lla([-EVENT_HORIZON/2, 0, 0], [lat_north, lon_east, 1000], "flat");
+south_lla = ned2lla([-EVENT_HORIZON, 0, 0], [lat_north, lon_east, 1000], "flat");
 south = south_lla(1);  % deg
-east_lla = ned2lla([0, EVENT_HORIZON/2, 0], [lat_north, lon_east, 1000], "flat");
+east_lla = ned2lla([0, EVENT_HORIZON, 0], [lat_north, lon_east, 1000], "flat");
 east = east_lla(2);  % deg
-west_lla = ned2lla([0, -EVENT_HORIZON/2, 0], [lat_north, lon_east, 1000], "flat");
+west_lla = ned2lla([0, -EVENT_HORIZON, 0], [lat_north, lon_east, 1000], "flat");
 west = west_lla(2);  % deg
 
 rng(19, "twister");
