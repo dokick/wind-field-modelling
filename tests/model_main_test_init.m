@@ -8,7 +8,7 @@ addpath("./scripts/");
 addpath("./tests/");
 addpath("./wind_field_modelling/");
 
-%% Main thing
+%% Model Configuration
 
 is_long_flight = false;
 
@@ -31,6 +31,8 @@ START_TIME = 0;  % s
 FREQUENCY = 125;  % Hz
 SAMPLE_TIME = 0.008;  % s (1/FREQUENCY)
 SIM_TIME = STOP_TIME - START_TIME;  % s
+
+%% Main
 
 average_velocity = 30;  % m/s
 distance = average_velocity * SIM_TIME;  % m

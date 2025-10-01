@@ -37,10 +37,13 @@ cosine_gust_log_ids = [ ...
     "model_cosine_gust_gust_width", ...
     "model_cosine_gust_amplitude"];
 
-trapezoidal_gust_params = transform_data(trapezoidal_gust_log_ids, trapezoidal_gust_capacity, out);
-sinusoidal_gust_params = transform_data(sinusoidal_gust_log_ids, sinusoidal_gust_capacity, out);
-les_gust_params = transform_data(les_gust_log_ids, les_gust_capacity, out);
-cosine_gust_params = transform_data(cosine_gust_log_ids, cosine_gust_capacity, out);
+% sim_logs = out.logsout;
+sim_logs = logsout;
+
+trapezoidal_gust_params = transform_data(trapezoidal_gust_log_ids, trapezoidal_gust_capacity, sim_logs);
+sinusoidal_gust_params = transform_data(sinusoidal_gust_log_ids, sinusoidal_gust_capacity, sim_logs);
+les_gust_params = transform_data(les_gust_log_ids, les_gust_capacity, sim_logs);
+cosine_gust_params = transform_data(cosine_gust_log_ids, cosine_gust_capacity, sim_logs);
 
 %% Run sim
 % Before running this section make sure the base models have restored their sample time otherwise this section will fail
@@ -48,6 +51,8 @@ cosine_gust_params = transform_data(cosine_gust_log_ids, cosine_gust_capacity, o
 warning("off");
 
 resolution = 100;
+START_TIME = 0.0;
+SAMPLE_TIME = 0.008;
 STOP_TIME = resolution*resolution*SAMPLE_TIME;
 
 [total_trapez_instances, plot_values_trapez] = plot_instances_of_model( ...
@@ -82,39 +87,55 @@ STOP_TIME = resolution*resolution*SAMPLE_TIME;
     cosine_gust_capacity, ...
     resolution);
 
+warning("on");
+
 %% Plot
+
+close all;
+clear s h;
 
 h = figure("visible", "off");
 hold on;
 
 for i = 1:total_trapez_instances
-    s = surf(plot_values_trapez{i, 1}, plot_values_trapez{i, 2}, plot_values_trapez{i, 3});
+    s = surf(plot_values_trapez{i, 2}, plot_values_trapez{i, 1}, plot_values_trapez{i, 3});
     s.EdgeAlpha = 0;
 end
 
 for i = 1:total_sinus_instances
-    s = surf(plot_values_sinus{i, 1}, plot_values_sinus{i, 2}, plot_values_sinus{i, 3});
+    s = surf(plot_values_sinus{i, 2}, plot_values_sinus{i, 1}, plot_values_sinus{i, 3});
     s.EdgeAlpha = 0;
 end
 
 for i = 1:total_les_instances
-    s = surf(plot_values_les{i, 1}, plot_values_les{i, 2}, plot_values_les{i, 3});
+    s = surf(plot_values_les{i, 2}, plot_values_les{i, 1}, plot_values_les{i, 3});
     s.EdgeAlpha = 0;
 end
 
 for i = 1:total_cosine_instances
-    s = surf(plot_values_cosine{i, 1}, plot_values_cosine{i, 2}, plot_values_cosine{i, 3});
+    s = surf(plot_values_cosine{i, 2}, plot_values_cosine{i, 1}, plot_values_cosine{i, 3});
     s.EdgeAlpha = 0;
 end
+
+spoof_height = zeros([length(lon), 1]);
+plot3(lon(:, 2), lat(:, 2), spoof_height, "k", "DisplayName", "Flight path");
+
+title("Testflug einer nicht-linearen Simulation (600s) (3D)", "FontSize", 15);
+xlabel("Längengrad (LON) [rad]", "FontSize", 15);
+ylabel("Breitengrad (LAT) [rad]", "FontSize", 15);
+
+cb = colorbar;
+cb.Label.String = "Windgeschwindigkeit [m/s]";
+cb.Label.FontSize = 15;
 
 hold off;
 set(h, "visible", "on");
 
 %% Functions
 
-function gust_params = transform_data(model_param_ids, capacity, simOut)
+function gust_params = transform_data(model_param_ids, capacity, sim_logs)
     gust_lat_0 = cell(1, capacity);
-    model_gust_lat_0 = simOut.logsout.getElement(model_param_ids(1)).Values;
+    model_gust_lat_0 = sim_logs.getElement(model_param_ids(1)).Values;
 
     for i = 1:capacity
         gust_lat_0{1, i}(:, 1) = model_gust_lat_0.Data(i:capacity:end-1+i);
@@ -152,7 +173,7 @@ function gust_params = transform_data(model_param_ids, capacity, simOut)
 
     for i = 1:num_params
         for j = 1:capacity
-            model_param = simOut.logsout.getElement(model_param_ids(i)).Values;
+            model_param = sim_logs.getElement(model_param_ids(i)).Values;
             gust_params{i, j}(:, 1) = model_param.Data(j:capacity:end-1+j);
             gust_params{i, j} = gust_params{i, j}(relevant_indexes{1, j});
         end
