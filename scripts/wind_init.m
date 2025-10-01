@@ -1,19 +1,17 @@
 % read_wind_field;
 
-% load("MyConfiguration.mat");
+SIM_TIME_WIND = 1000;  % s
 
-simulation_time = 1000;  % s
-
-matrix_idx = ceil((0:0.02:simulation_time) / 3600);
+matrix_idx = ceil((0:0.02:SIM_TIME_WIND) / 3600);
 matrix_idx(1) = 1;
 
 number_of_latitude_elements = 400;
 number_of_longitude_elements = 500;
 number_of_heights = 28;
 
-ts_wind_u = timeseries(0, 0:0.02:simulation_time);
-ts_wind_v = timeseries(0, 0:0.02:simulation_time);
-ts_wind_w = timeseries(0, 0:0.02:simulation_time);
+ts_wind_u = timeseries(0, 0:0.02:SIM_TIME_WIND);
+ts_wind_v = timeseries(0, 0:0.02:SIM_TIME_WIND);
+ts_wind_w = timeseries(0, 0:0.02:SIM_TIME_WIND);
 
 % Wind models config
 SEED = 12345;
